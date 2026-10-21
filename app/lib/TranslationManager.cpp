@@ -15,6 +15,7 @@ std::vector<LanguageInfo> build_languages()
 {
     return {
         {Language::English, QStringLiteral("en"), QStringLiteral("English"), QString()},
+        {Language::Russian, QStringLiteral("ru"), QStringLiteral("Русский"), QStringLiteral(":/i18n/aifilesorter_ru.qm")},
         {Language::Dutch, QStringLiteral("nl"), QStringLiteral("Dutch"), QStringLiteral(":/i18n/aifilesorter_nl.qm")},
         {Language::Swedish, QStringLiteral("sv"), QStringLiteral("Swedish"), QStringLiteral(":/i18n/aifilesorter_sv.qm")},
         {Language::Icelandic, QStringLiteral("is"), QStringLiteral("Icelandic"), QStringLiteral(":/i18n/aifilesorter_is.qm")},
