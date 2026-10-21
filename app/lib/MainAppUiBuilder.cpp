@@ -614,6 +614,7 @@ UiTranslator::Dependencies MainAppUiBuilder::build_translator_dependencies(MainA
             app.norwegian_action,
             app.finnish_action,
             app.danish_action,
+            app.russian_action,
             app.spanish_action,
             app.turkish_action,
             app.korean_action,
@@ -637,6 +638,7 @@ UiTranslator::Dependencies MainAppUiBuilder::build_translator_dependencies(MainA
             app.norwegian_action,
             app.finnish_action,
             app.danish_action,
+            app.russian_action,
             app.spanish_action,
             app.turkish_action,
             app.korean_action},
@@ -807,6 +809,10 @@ void MainAppUiBuilder::build_settings_menu(MainApp& app) {
     app.danish_action->setCheckable(true);
     app.danish_action->setData(static_cast<int>(Language::Danish));
     app.language_group->addAction(app.danish_action);
+    app.russian_action = app.language_menu->addAction(QString());
+    app.russian_action->setCheckable(true);
+    app.russian_action->setData(static_cast<int>(Language::Russian));
+    app.language_group->addAction(app.russian_action);
     app.spanish_action = app.language_menu->addAction(QString());
     app.spanish_action->setCheckable(true);
     app.spanish_action->setData(static_cast<int>(Language::Spanish));
