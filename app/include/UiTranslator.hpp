@@ -122,6 +122,7 @@ public:
         QAction*& norwegian_action;
         QAction*& finnish_action;
         QAction*& danish_action;
+        QAction*& russian_action;
         QAction*& spanish_action;
         QAction*& turkish_action;
         QAction*& korean_action;
@@ -150,6 +151,7 @@ public:
         QAction*& norwegian_action;
         QAction*& finnish_action;
         QAction*& danish_action;
+        QAction*& russian_action;
         QAction*& spanish_action;
         QAction*& turkish_action;
         QAction*& korean_action;
