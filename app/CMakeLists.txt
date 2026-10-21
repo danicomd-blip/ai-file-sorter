@@ -662,6 +662,7 @@ file(GLOB APP_HEADER_SOURCES CONFIGURE_DEPENDS
 )
 set(APP_SOURCES ${APP_MAIN_SOURCE} ${APP_LIB_SOURCES})
 set(AIFS_TRANSLATION_TS_FILES
+    "${CMAKE_CURRENT_SOURCE_DIR}/resources/i18n/aifilesorter_ru.ts"
     "${CMAKE_CURRENT_SOURCE_DIR}/resources/i18n/aifilesorter_fr.ts"
     "${CMAKE_CURRENT_SOURCE_DIR}/resources/i18n/aifilesorter_de.ts"
     "${CMAKE_CURRENT_SOURCE_DIR}/resources/i18n/aifilesorter_hi.ts"
