@@ -1,0 +1,46 @@
+name: Windows Russian Build
+
+on:
+  push:
+    branches: [ russian-localization ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 360
+    steps:
+      - name: Checkout source and submodules
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Enable long paths
+        shell: pwsh
+        run: git config --system core.longpaths true
+      - name: Install vcpkg
+        shell: pwsh
+        run: |
+          git clone https://github.com/microsoft/vcpkg.git "$env:GITHUB_WORKSPACE\vcpkg"
+          & "$env:GITHUB_WORKSPACE\vcpkg\bootstrap-vcpkg.bat"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Build llama runtime
+        shell: pwsh
+        run: |
+          & "$env:GITHUB_WORKSPACE\app\scripts\build_llama_windows.ps1" "cuda=off" "vulkan=off" "blas=off" "vcpkgroot=$env:GITHUB_WORKSPACE\vcpkg"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Build Windows application
+        shell: pwsh
+        run: |
+          & "$env:GITHUB_WORKSPACE\app\build_windows.ps1" -Configuration Release -VcpkgRoot "$env:GITHUB_WORKSPACE\vcpkg" -Variants Standard -Parallel 4
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Upload Windows binaries
+        uses: actions/upload-artifact@v4
+        with:
+          name: AI-File-Sorter-Russian-Windows
+          path: |
+            app/build-windows/**/aifilesorter.exe
+            app/bin/**/*
+          if-no-files-found: warn
