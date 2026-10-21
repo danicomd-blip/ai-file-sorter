@@ -36,11 +36,19 @@ jobs:
         run: |
           & "$env:GITHUB_WORKSPACE\app\build_windows.ps1" -Configuration Release -VcpkgRoot "$env:GITHUB_WORKSPACE\vcpkg" -Variants Standard -Parallel 4
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Validate portable Windows package
+        shell: pwsh
+        run: |
+          $dir = "app/build-windows/Release"
+          if (-not (Test-Path "$dir/aifilesorter.exe")) { throw "Missing aifilesorter.exe" }
+          $dlls = @(Get-ChildItem $dir -Filter "*.dll" -File -ErrorAction SilentlyContinue)
+          Write-Output "Found $($dlls.Count) DLLs next to executable"
+          if ($dlls.Count -eq 0) { throw "No DLLs staged; refusing to publish incomplete package" }
+          Get-ChildItem $dir | Select-Object Name, Length | Format-Table
       - name: Upload Windows binaries
         uses: actions/upload-artifact@v4
         with:
           name: AI-File-Sorter-Russian-Windows
           path: |
-            app/build-windows/**/aifilesorter.exe
-            app/bin/**/*
-          if-no-files-found: warn
+            app/build-windows/Release/**
+          if-no-files-found: error
